@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -37,8 +39,6 @@ public class MainActivity extends FragmentActivity {
     private ArrayList<MessageBean> messageBeans;
     private MyAdapter myAdapter;
     private boolean flag = false;
-    private static int count = 0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,10 +73,8 @@ public class MainActivity extends FragmentActivity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                count++;
-                if (count - visibleItemCount >= 9) {
+                if (totalItemCount - visibleItemCount > 0) {
                     flag = true;
-                    count = 0;
                 }
             }
         });
@@ -90,12 +88,12 @@ public class MainActivity extends FragmentActivity {
                     return;
                 }
                 et_message.setText("");
-                lv_list.startAnimation(topAnim);
                 MessageBean messageBean = new MessageBean();
                 messageBean.setMessage(message);
                 messageBean.setPosition("right");
                 messageBeans.add(messageBean);
                 myAdapter.notifyDataSetChanged();
+                lv_list.startAnimation(topAnim);
                 /*lv_list.setSelection(lv_list.getCount() - 1);*/
                 new Thread() {
                     @Override
@@ -105,7 +103,7 @@ public class MainActivity extends FragmentActivity {
                             sleep(500);
                             MessageBean e = new MessageBean();
                             e.setPosition("");
-                            e.setMessage("哈哈啊哈");
+                            e.setMessage("我是你爸爸");
                             messageBeans.add(e);
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -182,7 +180,7 @@ public class MainActivity extends FragmentActivity {
             }
             if (flag) {
                 topAnim = new TranslateAnimation(0, 0, view.getHeight() + 10, 0);
-                topAnim.setDuration(300);
+                topAnim.setDuration(500);
             }
             return view;
         }

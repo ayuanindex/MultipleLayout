@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#66EEEEEE"
+        android:background="#EEEEEE"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="10dp">
